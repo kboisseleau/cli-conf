@@ -1,6 +1,5 @@
 
 import { Octokit } from '@octokit/rest'
-import { readFileSync } from 'fs'
 import { Files } from '../files.js'
 import { ConfigstoreService } from '../service/configstore.service.js'
 
@@ -15,7 +14,7 @@ export class RefactoryInitGithub {
             const gconf = files.getGconfJson()
             conf.setdGithubToken(gconf.token)
         }
-        
+
         const octokit = new Octokit({
             auth: conf.getStoredGithubToken()
         })
