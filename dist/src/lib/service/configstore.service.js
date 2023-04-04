@@ -17,5 +17,8 @@ export class ConfigstoreService {
     setdGithubToken(token) {
         return this._config.set('githubToken', token);
     }
+    delete() {
+        this._config.delete('githubToken');
+    }
 }
 //# sourceMappingURL=configstore.service.js.map
