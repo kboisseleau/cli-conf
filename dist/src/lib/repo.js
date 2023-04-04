@@ -7,28 +7,20 @@ import touch from 'touch';
 import { simpleGit } from 'simple-git';
 export class Repos {
     async createRemoteRepo() {
-        console.log('1');
         const inquirer = new Inquirer();
-        console.log('1.1');
         const Spinner = CLI.Spinner;
         const githubAuthService = GithubAuthService.getInstance();
-        console.log('1.2');
         const octokit = githubAuthService.getInstanceOctokit();
-        console.log('1.3', octokit);
         const answers = await inquirer.askRepoDetails();
-        console.log('2');
         const data = {
             name: answers.name,
             description: answers.description,
             private: (answers.visibility === 'private')
         };
-        console.log('3');
         const status = new Spinner('Creating remote repository...');
         status.start();
-        console.log('4');
         try {
             const response = await octokit.repos.createForAuthenticatedUser(data);
-            console.log('5');
             return response.data.ssh_url;
         }
         finally {

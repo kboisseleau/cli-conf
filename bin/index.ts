@@ -5,7 +5,7 @@ import clear  from "clear"
 import figlet  from "figlet"
 
 import { Repos } from "../src/lib/repo.js"
-console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
 clear()
 
 console.log(

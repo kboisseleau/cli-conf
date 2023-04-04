@@ -4,7 +4,6 @@ import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";
 import { Repos } from "../src/lib/repo.js";
-console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 clear();
 console.log(chalk.yellow(figlet.textSync("Gconf", { horizontalLayout: "full" })));
 new Github();

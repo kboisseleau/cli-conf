@@ -11,6 +11,6 @@ export class Github {
     }
 
     public async createRepo () {
-        await this._githubAuthService.getInstanceOctokit().repos.createInOrg({ org: '', name: '', auto_init: true })
+        
     }
 }
