@@ -5,7 +5,7 @@
   "description": "Cli permetant d'initialiser un repo git et de récupérer des fichiers de config",
   "exports": "./bin/index.ts",
   "bin": {
-    "gconf": "./bin/index.ts"
+    "gconf": "./dist/bin/index.js"
   },
   "scripts": {
     "start": "npm run build && node dist/index.js",
