@@ -14,11 +14,11 @@ console.log(
   )
 
   const github = new Github()
-const run = () => {
-  yargs(hideBin(process.argv))
-  .command('repo', 'create repo github', () => {
-    github.createRepo()
-  }).argv
-}
+  const run = async () => {
+    yargs(hideBin(process.argv))
+    .command('repo', 'create repo github', () => {
+      github.createRepo()
+    }).argv
+  }
 
 run()
