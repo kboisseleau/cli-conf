@@ -5,13 +5,13 @@
   "description": "Cli permetant d'initialiser un repo git et de récupérer des fichiers de config",
   "exports": "./bin/index.ts",
   "bin": {
-    "gconf": "./bin/index.ts"
+    "gconf": "./dist/bin/index.js"
   },
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "npx nodemon",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && npx tsc"
   },
   "engines": {
     "node": "^16.18.0"

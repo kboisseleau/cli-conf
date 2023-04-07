@@ -9,23 +9,16 @@ clear()
 
 console.log(
     chalk.yellow(
-      figlet.textSync('Gconf', { horizontalLayout: 'full' })
+      figlet.textSync("Gconf", { horizontalLayout: "full" })
     )
   )
 
   const github = new Github()
-
+const run = () => {
   yargs(hideBin(process.argv))
   .command('repo', 'create repo github', () => {
     github.createRepo()
-  })
-  .command('greet', 'greet someone', (yargs) => {
-    yargs.option('name', {
-      describe: 'name of the person to greet',
-      demandOption: true,
-      type: 'string'
-    });
-  }, (argv) => {
-    console.log('argv =>', argv)
-  })
-  .argv;
+  }).argv
+}
+
+run()

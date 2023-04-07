@@ -25,7 +25,7 @@ export class Github {
             await repo.setupRepo(url)
         
             console.log(chalk.green('All done!'));
-          } catch(err) {
+          } catch(err: any) {
               if (err) {
                 switch (err.status) {
                   case 401:

@@ -5,20 +5,15 @@ import figlet from 'figlet';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 clear();
-console.log(chalk.yellow(figlet.textSync('Gconf', { horizontalLayout: 'full' })));
+console.log(chalk.yellow(figlet.textSync("Gconf", { horizontalLayout: "full" })));
 const github = new Github();
-yargs(hideBin(process.argv))
-    .command('repo', 'create repo github', () => {
-    github.createRepo();
-})
-    .command('greet', 'greet someone', (yargs) => {
-    yargs.option('name', {
-        describe: 'name of the person to greet',
-        demandOption: true,
-        type: 'string'
-    });
-}, (argv) => {
-    console.log('argv =>', argv);
-})
-    .argv;
+const run = () => {
+    yargs(hideBin(process.argv))
+        .command('repo', 'create repo github', () => {
+        github.createRepo();
+    })
+        .demandCommand(1)
+        .parse();
+};
+run();
 //# sourceMappingURL=index.js.map

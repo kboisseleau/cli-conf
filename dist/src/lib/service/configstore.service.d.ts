@@ -5,4 +5,5 @@ export declare class ConfigstoreService {
     static getInstance(): ConfigstoreService;
     getStoredGithubToken(): string;
     setdGithubToken(token: string): any;
+    delete(): void;
 }
