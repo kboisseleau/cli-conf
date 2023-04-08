@@ -79,5 +79,39 @@ export class Inquirer {
         ];
         return inquirer.prompt(questions);
     }
+    askIssueDetails() {
+        const argv = minimist(process.argv.slice(2));
+        const files = new Files();
+        const questions = [
+            {
+                type: 'input',
+                name: 'title',
+                message: 'Enter a title for the issue:',
+                default: argv._[0] || files.getCurrentDirectoryBase(),
+                validate: function (value) {
+                    if (value.length) {
+                        return true;
+                    }
+                    else {
+                        return 'Please enter a name for the repository.';
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'description',
+                default: argv._[1] || null,
+                message: 'Optionally enter a description of the issue:'
+            },
+            {
+                type: 'list',
+                name: 'visibility',
+                message: 'Voulez vous créer une branch à partir de cette issue:',
+                choices: ['OUI', 'NON'],
+                default: 'NON'
+            }
+        ];
+        return inquirer.prompt(questions);
+    }
 }
 //# sourceMappingURL=inquirer.js.map
