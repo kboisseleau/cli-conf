@@ -1,9 +1,8 @@
 export declare class Github {
-    private _spinner;
-    private _conf;
+    private _githubAuthService;
     private _octokit;
     constructor();
-    getInstance(): any;
-    getStoredGithubToken(): any;
-    getPersonalAccesToken(): Promise<any>;
+    createIssue(): Promise<void>;
+    createRepo(): Promise<void>;
+    private _catchError;
 }
