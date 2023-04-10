@@ -1,6 +1,6 @@
 export declare class Inquirer {
-    askGithubCredentials(): Promise<any>;
-    askRepoDetails(): any;
-    askIgnoreFiles(filelist: any): any;
-    askIssueDetails(): any;
+    static askGithubCredentials(): Promise<any>;
+    static askRepoDetails(): any;
+    static askIgnoreFiles(filelist: any): any;
+    static askIssueDetails(): any;
 }

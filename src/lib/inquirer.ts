@@ -3,40 +3,27 @@ import minimist from 'minimist'
 import { Files } from './files.js';
 
 export class Inquirer {
-    public async askGithubCredentials () {
+  static async askGithubCredentials () {
         const questions = [
           {
             name: 'username',
             type: 'input',
             message: 'Enter your GitHub username or e-mail address:',
-            validate: function( value ) {
-              if (value.length) {
-                return true;
-              } else {
-                return 'Please enter your username or e-mail address.'
-              }
-            }
+            validate: (value: string) => value.length ? true : 'Please enter your username or e-mail address.'
           },
           {
             name: 'password',
             type: 'password',
             message: 'Enter your password:',
-            validate: function(value) {
-              if (value.length) {
-                return true
-              } else {
-                return 'Please enter your password.'
-              }
-            }
+            validate: (value: string) => value.length ? true : 'Please enter your password.'
           }
         ]
 
         return inquirer.prompt(questions)
       }
 
-      public askRepoDetails () {
+      static askRepoDetails () {
         const argv = minimist(process.argv.slice(2))
-
         const files = new Files()
     
         const questions = [
@@ -45,13 +32,7 @@ export class Inquirer {
             name: 'name',
             message: 'Enter a name for the repository:',
             default: argv._[0] || files.getCurrentDirectoryBase(),
-            validate: function( value ) {
-              if (value.length) {
-                return true;
-              } else {
-                return 'Please enter a name for the repository.'
-              }
-            }
+            validate: (value: string) => value.length ? true : 'Please enter a name for the repository.',
           },
           {
             type: 'input',
@@ -71,7 +52,7 @@ export class Inquirer {
         return inquirer.prompt(questions)
       }
 
-      public askIgnoreFiles (filelist) {
+      static askIgnoreFiles (filelist) {
         const questions = [
           {
             type: 'checkbox',
@@ -84,29 +65,26 @@ export class Inquirer {
         return inquirer.prompt(questions);
       }
 
-      public askIssueDetails () {
-        const argv = minimist(process.argv.slice(2))
+      static askIssueDetails () {
+        const argv = minimist(process.argv.slice(2));
+        const files = new Files();
+        const DEFAULT_ISSUE_TITLE = argv._[0] || files.getCurrentDirectoryBase();
+        const DEFAULT_ISSUE_DESCRIPTION = argv._[1] || null;
+        const DEFAULT_CREATE_BRANCH = 'NON';
 
-        const files = new Files()
-    
         const questions = [
           {
             type: 'input',
             name: 'title',
             message: 'Enter a title for the issue:',
-            default: argv._[0] || files.getCurrentDirectoryBase(),
-            validate: function( value ) {
-              if (value.length) {
-                return true;
-              } else {
-                return 'Please enter a name for the repository.'
-              }
-            }
+            default: DEFAULT_ISSUE_TITLE,
+            validate: ( value: string ) => value.length ? true : 'Please enter a name for the repository.'
+
           },
           {
             type: 'input',
             name: 'description',
-            default: argv._[1] || null,
+            default: DEFAULT_ISSUE_DESCRIPTION,
             message: 'Optionally enter a description of the issue:'
           },
           {
@@ -114,7 +92,7 @@ export class Inquirer {
             name: 'visibility',
             message: 'Voulez vous créer une branch à partir de cette issue:',
             choices: [ 'OUI', 'NON' ],
-            default: 'NON'
+            default: DEFAULT_CREATE_BRANCH
           }
         ]
 

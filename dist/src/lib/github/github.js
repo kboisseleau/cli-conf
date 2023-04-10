@@ -1,8 +1,8 @@
-import { GithubAuthService } from './service/github-auth.service.js';
+import { GithubAuthService } from '../../service/github-auth.service.js';
 import { RefactoryInitGithub } from './refactory/refactory-init-github.js';
 import chalk from 'chalk';
-import { Repos } from './repo.js';
-import { Inquirer } from './inquirer.js';
+import { Repos } from '../repo.js';
+import { Inquirer } from '../inquirer.js';
 export class Github {
     constructor() {
         this._octokit = RefactoryInitGithub.init();
@@ -11,15 +11,13 @@ export class Github {
     }
     async createIssue() {
         try {
-            const inq = new Inquirer();
-            const answers = await inq.askIssueDetails();
+            const answers = await Inquirer.askIssueDetails();
             const response = await this._octokit.issues.create({
                 owner: "kboisseleau",
                 repo: "cli-conf",
                 title: answers.title,
                 body: answers.description,
             });
-            console.log(response.data);
         }
         catch (err) {
             this._catchError(err);
@@ -38,18 +36,12 @@ export class Github {
         }
     }
     _catchError(err) {
-        if (err) {
-            switch (err.status) {
-                case 401:
-                    console.log(chalk.red('Couldn\'t log you in. Please provide correct credentials/token.'));
-                    break;
-                case 422:
-                    console.log(chalk.red('There is already a remote repository or token with the same name'));
-                    break;
-                default:
-                    console.log(chalk.red(err));
-            }
-        }
+        const errorMessages = {
+            401: "Couldn't log you in. Please provide correct credentials/token.",
+            422: "There is already a remote repository or token with the same name",
+        };
+        const errorMessage = errorMessages[err.status] || err.message || err;
+        console.error(chalk.red(errorMessage));
     }
 }
 //# sourceMappingURL=github.js.map
