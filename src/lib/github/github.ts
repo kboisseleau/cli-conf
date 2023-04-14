@@ -3,6 +3,8 @@ import { RefactoryInitGithub } from './refactory/refactory-init-github.js'
 import chalk from 'chalk'
 import { Repos } from '../repo.js'
 import { Inquirer } from '../inquirer.js'
+import {  } from '@octokit/types'
+import { Issue } from 'src/@model/github/issue.interface.js'
 
 export class Github {
     private _githubAuthService: GithubAuthService
@@ -14,12 +16,49 @@ export class Github {
         this._githubAuthService.setInstance(this._octokit)
     }
 
+    public async createBranchFromIssue() {
+      try {
+        const {data: issues} = await this._octokit.issues.listForRepo({
+          owner: "kboisseleau",
+          repo: "gconf",
+        });
+        const titles: string[] = issues.map(i => i.title) 
+        const answers: { visibility: string } = await Inquirer.askChoicesIssueBranch(titles)
+        const issue: Issue = issues.find(i => i.title === answers.visibility)
+  
+        await this._createBranch(issue)
+      } catch(err: any) {
+        console.error(err)
+          this._catchError(err)
+        }
+    }
+
+    private async _createBranch(issue: Issue) {
+      const nameBranch = `${issue.number}-${issue.title.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`;
+      const owner =  'kboisseleau'
+      const repo = 'gconf'
+
+      const { data: branch } = await this._octokit.repos.getBranch({ owner, repo, branch: "develop" });
+      const commitSha = branch.commit.sha;
+
+      console.log(commitSha)
+      console.log('_createBranch')
+      await this._octokit.rest.git.createRef({
+        owner,
+        repo,
+        ref: `refs/heads/${nameBranch}`,
+        sha: commitSha,
+      });
+
+      await this._octokit.issues.update({ owner, repo, issue_number: issue.number, labels: ["branch-created"], body: `This issue has been branched to ${nameBranch}` });
+    }
+
     public async createIssue() {
       try {
         const answers = await Inquirer.askIssueDetails()
         const response = await this._octokit.issues.create({
           owner: "kboisseleau",
-          repo: "cli-conf",
+          repo: "gconf",
           title: answers.title,
           body: answers.description,
         });

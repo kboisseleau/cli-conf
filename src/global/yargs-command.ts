@@ -46,6 +46,9 @@ export class YargsCommande {
         .command('issue', 'create issue github', () => {
             github.createIssue()
         })
+        .command('branch', 'create branch', () => {
+            github.createBranchFromIssue()
+        })
     }
 
     static listFnArgv () {

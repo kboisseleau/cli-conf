@@ -88,5 +88,16 @@ export class Inquirer {
         ];
         return inquirer.prompt(questions);
     }
+    static askChoicesIssueBranch(choices) {
+        const questions = [
+            {
+                type: 'list',
+                name: 'visibility',
+                message: 'A partir de quelle issue voulez vous créer une branch ?',
+                choices,
+            }
+        ];
+        return inquirer.prompt(questions);
+    }
 }
 //# sourceMappingURL=inquirer.js.map
