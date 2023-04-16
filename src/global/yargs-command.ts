@@ -46,6 +46,16 @@ export class YargsCommande {
         .command('issue', 'create issue github', () => {
             github.createIssue()
         })
+        .command('branch', 'create branch', () => {
+            github.createBranchFromIssue()
+        })
+    }
+
+    static commandGit () {
+        this.argv
+        .command('', '', () => {
+            
+          })
     }
 
     static listFnArgv () {
@@ -56,9 +66,7 @@ export class YargsCommande {
                 conf.setdGithubToken(argv.token)
             },
             del: (argv) => {
-                if (argv.token === '') {
-                    conf.delete()
-                  }
+                if (argv.token === '') conf.delete()
             }
         }
     }

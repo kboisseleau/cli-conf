@@ -89,10 +89,37 @@ export class Inquirer {
           },
           {
             type: 'list',
-            name: 'visibility',
+            name: 'branch',
             message: 'Voulez vous créer une branch à partir de cette issue:',
             choices: [ 'OUI', 'NON' ],
             default: DEFAULT_CREATE_BRANCH
+          }
+        ]
+
+        return inquirer.prompt(questions)
+      }
+      
+      static askChoicesIssueBranch (choices: string[]) {
+        const questions = [
+          {
+            type: 'list',
+            name: 'visibility',
+            message: 'A partir de quelle issue voulez vous créer une branch ?',
+            choices,
+          }
+        ]
+
+        return inquirer.prompt(questions)
+      }
+
+      static askSwitchedBranch () {
+        const questions = [
+          {
+            type: 'list',
+            name: 'checkout',
+            message: 'Voulez vous  basculer sur la branch créer ?:',
+            choices: [ 'OUI', 'NON' ],
+            default: 'NON'
           }
         ]
 
