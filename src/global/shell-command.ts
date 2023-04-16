@@ -1,7 +1,8 @@
-import { exec } from 'shelljs';
+import shell from 'shelljs';
+
 export class ShellCommand {
     static gitCheckoutBranch (name: string) {
-        exec('git fetch origin')
-        exec(`git checkout ${name}`)
+        shell.exec('git fetch origin')
+        shell.exec(`git checkout ${name}`)
     }
 }

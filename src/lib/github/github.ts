@@ -3,8 +3,8 @@ import { RefactoryInitGithub } from './refactory/refactory-init-github.js'
 import chalk from 'chalk'
 import { Repos } from '../repo.js'
 import { Inquirer } from '../inquirer.js'
-import {  } from '@octokit/types'
 import { Issue } from 'src/@model/github/issue.interface.js'
+import { ShellCommand } from '../../../src/global/shell-command.js'
 
 export class Github {
     private _githubAuthService: GithubAuthService
@@ -41,8 +41,6 @@ export class Github {
       const { data: branch } = await this._octokit.repos.getBranch({ owner, repo, branch: "develop" });
       const commitSha = branch.commit.sha;
 
-      console.log(commitSha)
-      console.log('_createBranch')
       await this._octokit.rest.git.createRef({
         owner,
         repo,
@@ -51,18 +49,27 @@ export class Github {
       });
 
       await this._octokit.issues.update({ owner, repo, issue_number: issue.number, labels: ["branch-created"], body: `This issue has been branched to ${nameBranch}` });
+
+      console.log(chalk.green('La branch à bien été créer'));
+
+      const { checkout } = await Inquirer.askSwitchedBranch()
+
+      checkout === 'OUI' && ShellCommand.gitCheckoutBranch(nameBranch)
     }
 
     public async createIssue() {
       try {
         const answers = await Inquirer.askIssueDetails()
-        const response = await this._octokit.issues.create({
+        const {data: issue} = await this._octokit.issues.create({
           owner: "kboisseleau",
           repo: "gconf",
           title: answers.title,
           body: answers.description,
         });
-        
+
+        console.log(chalk.green('L\'issue à bien été créer'));
+
+        answers.branch === 'OUI' && this._createBranch(issue)    
       } catch(err: any) {
           this._catchError(err)
         }

@@ -51,6 +51,13 @@ export class YargsCommande {
         })
     }
 
+    static commandGit () {
+        this.argv
+        .command('', '', () => {
+            
+          })
+    }
+
     static listFnArgv () {
         const conf = ConfigstoreService.getInstance()
 
@@ -59,9 +66,7 @@ export class YargsCommande {
                 conf.setdGithubToken(argv.token)
             },
             del: (argv) => {
-                if (argv.token === '') {
-                    conf.delete()
-                  }
+                if (argv.token === '') conf.delete()
             }
         }
     }
