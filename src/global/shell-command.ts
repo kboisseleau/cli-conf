@@ -5,4 +5,8 @@ export class ShellCommand {
         shell.exec('git fetch origin')
         shell.exec(`git checkout ${name}`)
     }
+
+    static gitRemoveLocalBranch (name: string) {
+        shell.exec(`git branch -D ${name}`)
+    }
 }

@@ -2,9 +2,8 @@ import { GithubAuthService } from '../../service/github-auth.service.js'
 import { RefactoryInitGithub } from './refactory/refactory-init-github.js'
 import chalk from 'chalk'
 import { Repos } from '../repo.js'
-import { Inquirer } from '../inquirer.js'
-import { Issue } from 'src/@model/github/issue.interface.js'
-import { ShellCommand } from '../../../src/global/shell-command.js'
+import { Issue } from './class/issue.js'
+import { Branch } from './class/branch.js'
 
 export class Github {
     private _githubAuthService: GithubAuthService
@@ -16,60 +15,24 @@ export class Github {
         this._githubAuthService.setInstance(this._octokit)
     }
 
+
     public async createBranchFromIssue() {
       try {
-        const {data: issues} = await this._octokit.issues.listForRepo({
-          owner: "kboisseleau",
-          repo: "gconf",
-        });
-        const titles: string[] = issues.map(i => i.title) 
-        const answers: { visibility: string } = await Inquirer.askChoicesIssueBranch(titles)
-        const issue: Issue = issues.find(i => i.title === answers.visibility)
+        const issue = await Issue.getIssue(this._octokit)
   
-        await this._createBranch(issue)
+        await Branch.createBranch(this._octokit, issue)
       } catch(err: any) {
         console.error(err)
           this._catchError(err)
         }
     }
 
-    private async _createBranch(issue: Issue) {
-      const nameBranch = `${issue.number}-${issue.title.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`;
-      const owner =  'kboisseleau'
-      const repo = 'gconf'
-
-      const { data: branch } = await this._octokit.repos.getBranch({ owner, repo, branch: "develop" });
-      const commitSha = branch.commit.sha;
-
-      await this._octokit.rest.git.createRef({
-        owner,
-        repo,
-        ref: `refs/heads/${nameBranch}`,
-        sha: commitSha,
-      });
-
-      await this._octokit.issues.update({ owner, repo, issue_number: issue.number, labels: ["branch-created"], body: `This issue has been branched to ${nameBranch}` });
-
-      console.log(chalk.green('La branch à bien été créer'));
-
-      const { checkout } = await Inquirer.askSwitchedBranch()
-
-      checkout === 'OUI' && ShellCommand.gitCheckoutBranch(nameBranch)
-    }
 
     public async createIssue() {
       try {
-        const answers = await Inquirer.askIssueDetails()
-        const {data: issue} = await this._octokit.issues.create({
-          owner: "kboisseleau",
-          repo: "gconf",
-          title: answers.title,
-          body: answers.description,
-        });
+        const answers = await Issue.createIssue(this._octokit)
 
-        console.log(chalk.green('L\'issue à bien été créer'));
-
-        answers.branch === 'OUI' && this._createBranch(issue)    
+        answers.branch === 'OUI' && Branch.createBranch(this._octokit, answers.issue)    
       } catch(err: any) {
           this._catchError(err)
         }
