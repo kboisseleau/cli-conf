@@ -12,50 +12,58 @@ Options:
 --token: (obligatoire) Token Github à définir dans la configuration de l'application.
 Exemple d'utilisation:
 
-shell
+```shell
 $ gconf set --token abc12345
-del
+```
+### del
 Cette commande permet de supprimer le token Github de la configuration de l'application.
 
-shell
+```shell
 $ gconf del --token <github_token>
+```
 Options:
 
 --token: (obligatoire) Token Github à supprimer de la configuration de l'application.
 Exemple d'utilisation:
 
-shell
+```shell
 $ gconf del --token abc12345
-repo
+```
+### repo
 Cette commande permet de créer un nouveau repository sur Github.
 
-shell
+```shell
 $ gconf repo
+```
 Exemple d'utilisation:
 
-shell
+```shell
 $ gconf repo
-issue
+```
+### issue
 Cette commande permet de créer un nouvel issue sur Github.
 
-shell
+```shell
 $ gconf issue
 Exemple d'utilisation:
 
 shell
 $ gconf issue
-branch
+```
+### branch
 Cette commande permet de gérer les branches sur Github.
 
-shell
+```shell
 $ gconf branch [-d]
+```
 Options:
 
 -d ou --delete: Supprime une branche locale.
 Exemple d'utilisation:
 
-shell
+```shell
 $ gconf branch -d
+```
 test
 Cette commande permet de gérer les branches localement.
 
