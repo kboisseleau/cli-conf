@@ -11,7 +11,6 @@ export class YargsCommande {
         this.usage()
         this.commandForTheConfigStore()
         this.commandGithub(github)
-        this.commandGit(github)
         this.argv.argv
     }
 
@@ -67,30 +66,6 @@ export class YargsCommande {
         // .command('branch', 'create branch', () => {
         //     github.createBranchFromIssue()
         // })
-    }
-
-    static commandGit (github: Github) {
-        this.argv
-        .command({
-            command: 'test',
-            describe: 'Gérer les branches',
-            builder: (yargs) => {
-              return yargs.option('D', {
-                alias: 'delete',
-                describe: 'Supprimer une branche locale',
-                demandOption: false,
-                type: 'boolean'
-              }).option('l', {
-                alias: 'local',
-                describe: 'Endroit de la branche à supprimer',
-                demandOption: false,
-                type: 'boolean'
-              }), () => {
-                console.log('test')
-                github.deleteLocalBranch()
-               }
-            }
-        })
     }
 
     static listFnArgv () {
