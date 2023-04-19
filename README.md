@@ -56,6 +56,10 @@ Cette commande permet de gérer les branches sur Github.
 ```shell
 $ gconf branch [-d]
 ```
+Sans options:
+
+Permet de créer une branch à partir d'une issue
+
 Options:
 
 -d ou --delete: Supprime une branche locale.
@@ -64,6 +68,5 @@ Exemple d'utilisation:
 ```shell
 $ gconf branch -d
 ```
-test
-Cette commande permet de gérer les branches localement.
+
 
