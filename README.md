@@ -1,4 +1,9 @@
 # gconf
+### Installation
+
+```javascript
+$ npm i -g gconf
+```
 Commandes disponibles
 ### set
 Cette commande permet de définir un token Github dans la configuration de l'application.
