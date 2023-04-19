@@ -112,6 +112,19 @@ export class Inquirer {
         return inquirer.prompt(questions)
       }
 
+      static askChoicesDeleteLocalBranch (choices: String[]) {
+        const questions = [
+          {
+            type: 'checkbox',
+            name: 'selectedOptions',
+            message: 'Sélectionnez les branch à supprimer :',
+            choices,
+          },
+        ]
+
+        return inquirer.prompt(questions)
+      }
+
       static askSwitchedBranch () {
         const questions = [
           {

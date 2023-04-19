@@ -5,15 +5,29 @@ import chalk from 'chalk';
 type Branch = 'OUI' | 'NON'
 
 export class Issue {
+
+    static async getIssues (octokit): Promise<any> {
+        return await octokit.issues.listForRepo({
+            owner: "kboisseleau",
+            repo: "gconf",
+          });
+    }
     
     static async getIssue (octokit): Promise<DataIssue> {
-        const {data: issues} = await octokit.issues.listForRepo({
-          owner: "kboisseleau",
-          repo: "gconf",
-        });
-        const titles: string[] = issues.map(i => i.title) 
-        const answers: { visibility: string } = await Inquirer.askChoicesIssueBranch(titles)
-        return issues.find(i => i.title === answers.visibility)
+        const {data: issues} = await this.getIssues(octokit)
+        const titles: string[] = issues.map(i => i.title)
+
+        const { visibility: title } = await Inquirer.askChoicesIssueBranch(titles)
+        return issues.find(i => i.title === title)
+      }
+
+      static async getAllSelectionIssue (octokit): Promise<string[]> {
+        const {data: issues} = await this.getIssues(octokit)
+        const titles: string[] = issues.map(i => `${i.number}-${i.title.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`)
+        titles.push('ALL')
+        const { visibility: title } = await Inquirer.askChoicesIssueBranch(titles)
+
+        return title === 'ALL' ? titles : [...title]
       }
 
     static async createIssue(octokit): Promise<{issue: DataIssue, branch: Branch}> {

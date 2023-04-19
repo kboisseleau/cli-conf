@@ -11,6 +11,7 @@ export class YargsCommande {
         this.usage()
         this.commandForTheConfigStore()
         this.commandGithub(github)
+        this.commandGit(github)
         this.argv.argv
     }
 
@@ -46,16 +47,50 @@ export class YargsCommande {
         .command('issue', 'create issue github', () => {
             github.createIssue()
         })
-        .command('branch', 'create branch', () => {
-            github.createBranchFromIssue()
-        })
+        .command('branch', 'Gérer les branches', (yargs) => {
+            yargs
+              .option('d', {
+                alias: 'delete',
+                describe: 'Supprimer une branche',
+                type: 'boolean',
+                requiresArg: false
+              })
+
+              const argv = yargs.argv
+
+              if (argv.d) {
+                github.deleteLocalBranch()
+              } else {
+                github.createBranchFromIssue()
+              }
+          })
+        // .command('branch', 'create branch', () => {
+        //     github.createBranchFromIssue()
+        // })
     }
 
-    static commandGit () {
+    static commandGit (github: Github) {
         this.argv
-        .command('', '', () => {
-            
-          })
+        .command({
+            command: 'test',
+            describe: 'Gérer les branches',
+            builder: (yargs) => {
+              return yargs.option('D', {
+                alias: 'delete',
+                describe: 'Supprimer une branche locale',
+                demandOption: false,
+                type: 'boolean'
+              }).option('l', {
+                alias: 'local',
+                describe: 'Endroit de la branche à supprimer',
+                demandOption: false,
+                type: 'boolean'
+              }), () => {
+                console.log('test')
+                github.deleteLocalBranch()
+               }
+            }
+        })
     }
 
     static listFnArgv () {

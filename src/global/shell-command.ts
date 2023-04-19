@@ -6,7 +6,9 @@ export class ShellCommand {
         shell.exec(`git checkout ${name}`)
     }
 
-    static gitRemoveLocalBranch (name: string) {
-        shell.exec(`git branch -D ${name}`)
+    static gitRemoveLocalBranch (names: String[]) {
+        for (const name of names) {
+            shell.exec(`git branch -D ${name}`)
+        }
     }
 }

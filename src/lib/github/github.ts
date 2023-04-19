@@ -27,6 +27,14 @@ export class Github {
         }
     }
 
+    public async deleteLocalBranch () {
+      try {
+        await Branch.deleteLocalBranch()
+      } catch(err: any) {
+        this._catchError(err)
+      }
+    }
+
 
     public async createIssue() {
       try {
