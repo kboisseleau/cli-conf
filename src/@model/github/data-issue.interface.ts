@@ -1,4 +1,4 @@
-export interface Issue {
+export interface DataIssue {
     url: string;
     repository_url: string;
     labels_url: string;
