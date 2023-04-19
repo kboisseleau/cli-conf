@@ -1,13 +1,13 @@
 # gconf
 Commandes disponibles
-set
+### set
 Cette commande permet de définir un token Github dans la configuration de l'application.
 
 shell
 $ gconf set --token <github_token>
 Options:
 
---token: (obligatoire) Token Github à définir dans la configuration de l'application.
+' '--token': (obligatoire) Token Github à définir dans la configuration de l'application.
 Exemple d'utilisation:
 
 shell
