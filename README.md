@@ -5,34 +5,27 @@
 $ npm i -g gconf
 ```
 Commandes disponibles
-### set
-Cette commande permet de définir un token Github dans la configuration de l'application.
+### Token
+Cette commande permet de définir ou supprimer un token Github dans la configuration de l'application.
 
-```shell
-$ gconf set --token <github_token>
+```bash
+$ gconf token -s <github_token>
 ```
-Options:
 
+ou
 
---token: (obligatoire) Token Github à définir dans la configuration de l'application.
-Exemple d'utilisation:
-
-```shell
-$ gconf set --token abc12345
+```bash
+$ gconf token -d
 ```
-### del
-Cette commande permet de supprimer le token Github de la configuration de l'application.
+Options
+La commande token supporte les options suivantes :
 
-```shell
-$ gconf del --token <github_token>
-```
-Options:
+-s, --set : Définit un token Github dans la configuration de l'application. Exige un argument <token> pour spécifier le token à définir.
+-d, --delete : Supprime le token Github dans la configuration de l'application. Aucun argument requis.
+Exemple d'utilisation pour définir un token Github :
 
---token: (obligatoire) Token Github à supprimer de la configuration de l'application.
-Exemple d'utilisation:
-
-```shell
-$ gconf del --token abc12345
+```bash
+$ gconf token -s 151515
 ```
 ### repo
 Cette commande permet de créer un nouveau repository sur Github.

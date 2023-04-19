@@ -22,20 +22,32 @@ export class YargsCommande {
         const { set, del } = this.listFnArgv()
 
         this.argv
-        .command('set', 'set configstore', {
-            token: {
-              type: "string",
-              demandOption: true,
-              describe: "Github token",
-            }
-          }, set)
-        .command('del','remove element configstore', {
-            token: {
-            describe: 'Remove token',
-            demandOption: true,
-            type: 'string'
-            }
-          }, del)
+        .command('token', 'set configstore', (yargs) => {
+            yargs
+              .option('s', {
+                alias: 'set',
+                describe: 'Définir un token Github dans la configuration de l\'application',
+                type: 'boolean',
+                requiresArg: true
+              })
+              .option('d', {
+                alias: 'delete',
+                describe: 'Supprimer un token Github dans la configuration de l\'application',
+                type: 'boolean',
+                requiresArg: false
+              })
+
+              const argv = yargs.argv
+              console.log(argv)
+            //   const conf = ConfigstoreService.getInstance()
+              if (argv.d) {
+                // conf.delete()
+              } else if (argv.s) {
+                const token = argv._.pop()
+                console.log(token)
+                // conf.setdGithubToken(argv.token)
+              }
+        })
     }
 
     static commandGithub (github: Github) {
