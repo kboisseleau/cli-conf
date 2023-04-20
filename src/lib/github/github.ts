@@ -1,16 +1,27 @@
 import { GithubAuthService } from '../../service/github-auth.service.js'
-import { RefactoryInitGithub } from './refactory/refactory-init-github.js'
 import chalk from 'chalk'
 import { Repos } from '../repo.js'
 import { Issue } from './class/issue.js'
 import { Branch } from './class/branch.js'
+import { ConfigstoreService } from '../../../src/service/configstore.service.js'
+import { CONFIG_FIELD } from '../../../src/@model/enum/config-field.enum.js'
+import { Octokit } from '@octokit/rest'
 
 export class Github {
     private _githubAuthService: GithubAuthService
     private _octokit
+    private _conf
+    private _owner
+    private _repo
 
     constructor () {
-        this._octokit = RefactoryInitGithub.init()
+      this._conf = ConfigstoreService.getInstance()
+      const githubToken = this._conf.get(CONFIG_FIELD.githubToken)
+      this._repo = this._conf.get(CONFIG_FIELD.githubRepo)
+      this._owner = this._conf.get(CONFIG_FIELD.githubOwner)
+      
+      if (githubToken) this._octokit = new Octokit({ auth: githubToken })
+
         this._githubAuthService = GithubAuthService.getInstance()
         this._githubAuthService.setInstance(this._octokit)
     }
@@ -18,9 +29,9 @@ export class Github {
 
     public async createBranchFromIssue() {
       try {
-        const issue = await Issue.getIssue(this._octokit)
+        const issue = await Issue.getIssue(this._octokit, this._owner, this._repo)
   
-        await Branch.createBranch(this._octokit, issue)
+        await Branch.createBranch(this._octokit, issue, this._owner, this._repo)
       } catch(err: any) {
         console.error(err)
           this._catchError(err)
@@ -38,9 +49,9 @@ export class Github {
 
     public async createIssue() {
       try {
-        const answers = await Issue.createIssue(this._octokit)
+        const answers = await Issue.createIssue(this._octokit, this._owner, this._repo)
 
-        answers.branch === 'OUI' && Branch.createBranch(this._octokit, answers.issue)    
+        answers.branch === 'OUI' && Branch.createBranch(this._octokit, answers.issue, this._owner, this._repo)    
       } catch(err: any) {
           this._catchError(err)
         }

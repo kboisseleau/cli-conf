@@ -22,10 +22,8 @@ export class Branch {
           return branches.all;
     }
 
-    static async createBranch(octokit, issue: DataIssue) {
+    static async createBranch(octokit, issue: DataIssue, owner: string, repo: string) {
         const nameBranch = `${issue.number}-${issue.title.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`;
-        const owner =  'kboisseleau'
-        const repo = 'gconf'
   
         const { data: branch } = await octokit.repos.getBranch({ owner, repo, branch: "develop" });
         const commitSha = branch.commit.sha;
