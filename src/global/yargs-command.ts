@@ -2,6 +2,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { ConfigstoreService } from '../service/configstore.service.js'
 import { Github } from '../lib/github/github.js'
+import { CONFIG_FIELD } from '../../src/@model/enum/config-field.enum.js'
 
 export class YargsCommande {
     static argv = yargs(hideBin(process.argv))
@@ -19,33 +20,41 @@ export class YargsCommande {
     }
 
     static commandForTheConfigStore () {
-        const { set, del } = this.listFnArgv()
 
         this.argv
-        .command('token', 'set configstore', (yargs) => {
+        .command('config', 'set configstore', (yargs) => {
             yargs
-              .option('s', {
-                alias: 'set',
+              .option('t', {
+                alias: 'token',
                 describe: 'Définir un token Github dans la configuration de l\'application',
                 type: 'boolean',
                 requiresArg: true
               })
-              .option('d', {
-                alias: 'delete',
-                describe: 'Supprimer un token Github dans la configuration de l\'application',
+              .option('r', {
+                alias: 'repo',
+                describe: 'Définir un repo Github dans la configuration de l\'application',
+                type: 'boolean',
+                requiresArg: false
+              })
+              .option('o', {
+                alias: 'owner',
+                describe: 'Définir un owner Github dans la configuration de l\'application',
                 type: 'boolean',
                 requiresArg: false
               })
 
               const argv = yargs.argv
-              console.log(argv)
-            //   const conf = ConfigstoreService.getInstance()
-              if (argv.d) {
-                // conf.delete()
-              } else if (argv.s) {
-                const token = argv._.pop()
-                console.log(token)
-                // conf.setdGithubToken(argv.token)
+              const conf = ConfigstoreService.getInstance()
+
+              const argument = argv._.pop()
+
+              console.log(argument)
+              if (argv.t) {
+                conf.set(CONFIG_FIELD.githubToken, argument)
+              } else if (argv.r) {
+                conf.set(CONFIG_FIELD.githubRepo, argument)
+              } else if (argv.o) {
+                conf.set(CONFIG_FIELD.githubOwner, argument)
               }
         })
     }
@@ -78,18 +87,5 @@ export class YargsCommande {
         // .command('branch', 'create branch', () => {
         //     github.createBranchFromIssue()
         // })
-    }
-
-    static listFnArgv () {
-        const conf = ConfigstoreService.getInstance()
-
-        return {
-            set: (argv) => {
-                conf.setdGithubToken(argv.token)
-            },
-            del: (argv) => {
-                if (argv.token === '') conf.delete()
-            }
-        }
     }
 }

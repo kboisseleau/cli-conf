@@ -1,3 +1,4 @@
+import { ConfigstoreService } from "../../../../src/service/configstore.service.js";
 import { DataIssue } from "../../../../src/@model/github/data-issue.interface.js";
 import { Inquirer } from "../../../../src/lib/inquirer.js";
 import chalk from 'chalk';
@@ -5,7 +6,7 @@ import chalk from 'chalk';
 type Branch = 'OUI' | 'NON'
 
 export class Issue {
-
+    static conf = ConfigstoreService.getInstance();
     static async getIssues (octokit): Promise<any> {
         return await octokit.issues.listForRepo({
             owner: "kboisseleau",
