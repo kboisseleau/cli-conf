@@ -7,7 +7,6 @@ export class Github {
         this._githubAuthService.setInstance(octokit);
     }
     async createRepo() {
-        await this._githubAuthService.getInstanceOctokit().repos.createInOrg({ org: '', name: '', auto_init: true });
     }
 }
 //# sourceMappingURL=github.js.map

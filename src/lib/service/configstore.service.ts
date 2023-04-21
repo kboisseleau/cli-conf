@@ -23,4 +23,8 @@ export class ConfigstoreService {
     public setdGithubToken (token: string) {
         return this._config.set('githubToken', token)
         }
+
+    public delete () {
+        this._config.delete('githubToken')
+    }
 }

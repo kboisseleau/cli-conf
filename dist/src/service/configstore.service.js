@@ -11,11 +11,11 @@ export class ConfigstoreService {
         }
         return ConfigstoreService.instance;
     }
-    getStoredGithubToken() {
-        return this._config.get('githubToken');
+    get(conf) {
+        return this._config.get(conf);
     }
-    setdGithubToken(token) {
-        return this._config.set('githubToken', token);
+    set(conf, value) {
+        this._config.set(conf, value);
     }
     delete() {
         this._config.delete('githubToken');
