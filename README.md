@@ -15,13 +15,13 @@ $ gconf token -t <github_token>
 ou
 
 ```bash
-$ gconf token -r
+$ gconf token -r <github_repo>
 ```
 
 ou
 
 ```bash
-$ gconf token -o
+$ gconf token -o <github_owner>
 ```
 Options
 La commande token supporte les options suivantes :
