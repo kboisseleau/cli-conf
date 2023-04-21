@@ -1,5 +1,6 @@
 import Configstore from 'configstore'
 import { readFileSync } from 'fs'
+import { SetConfig } from 'src/@model/type/set-config.type.js'
 
 export class ConfigstoreService {
     private static instance: ConfigstoreService
@@ -16,13 +17,14 @@ export class ConfigstoreService {
 
         return ConfigstoreService.instance
     }
-    public getStoredGithubToken (): string {
-        return this._config.get('githubToken')
-        }
+
+    public get (conf: SetConfig): string {
+        return this._config.get(conf)
+    }
     
-    public setdGithubToken (token: string) {
-        return this._config.set('githubToken', token)
-        }
+    public set (conf: SetConfig, value: any) {
+        this._config.set(conf, value)
+    }
 
     public delete () {
         this._config.delete('githubToken')
