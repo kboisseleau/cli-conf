@@ -1,27 +1,27 @@
-# gconf
+# cgg
 ### Installation
 
 ```javascript
-$ npm i -g gconf
+$ npm i -g cgg
 ```
 Commandes disponibles
 ### Config
 Cette commande permet de définir ou supprimer un token Github dans la configuration de l'application.
 
 ```bash
-$ gconf token -t <github_token>
+$ cgg token -t <github_token>
 ```
 
 ou
 
 ```bash
-$ gconf token -r <github_repo>
+$ cgg token -r <github_repo>
 ```
 
 ou
 
 ```bash
-$ gconf token -o <github_owner>
+$ cgg token -o <github_owner>
 ```
 Options
 La commande token supporte les options suivantes :
@@ -32,34 +32,34 @@ La commande token supporte les options suivantes :
 Exemple d'utilisation pour définir un token Github :
 
 ```bash
-$ gconf token -t 151515
+$ cgg token -t 151515
 ```
 ### repo
 Cette commande permet de créer un nouveau repository sur Github.
 
 ```shell
-$ gconf repo
+$ cgg repo
 ```
 Exemple d'utilisation:
 
 ```shell
-$ gconf repo
+$ cgg repo
 ```
 ### issue
 Cette commande permet de créer un nouvel issue sur Github.
 
 ```shell
-$ gconf issue
+$ cgg issue
 Exemple d'utilisation:
 
 shell
-$ gconf issue
+$ cgg issue
 ```
 ### branch
 Cette commande permet de gérer les branches sur Github.
 
 ```shell
-$ gconf branch [-d]
+$ cgg branch [-d]
 ```
 Sans options:
 
@@ -71,7 +71,7 @@ Options:
 Exemple d'utilisation:
 
 ```shell
-$ gconf branch -d
+$ cgg branch -d
 ```
 
 
