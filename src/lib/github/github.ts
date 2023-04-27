@@ -13,22 +13,26 @@ export class Github {
     private _conf
     private _owner
     private _repo
+    private _token
 
     constructor () {
       this._conf = ConfigstoreService.getInstance()
-      const githubToken = this._conf.get(CONFIG_FIELD.githubToken)
+      this._token = this._conf.get(CONFIG_FIELD.githubToken)
       this._repo = this._conf.get(CONFIG_FIELD.githubRepo)
       this._owner = this._conf.get(CONFIG_FIELD.githubOwner)
-      
-      if (githubToken) this._octokit = new Octokit({ auth: githubToken })
 
+      if (this._token) {
+        this._octokit = new Octokit({ auth: this._token })
         this._githubAuthService = GithubAuthService.getInstance()
         this._githubAuthService.setInstance(this._octokit)
+      }
+
     }
 
 
     public async createBranchFromIssue() {
       try {
+        this._configVerify()
         const issue = await Issue.getIssue(this._octokit, this._owner, this._repo)
   
         await Branch.createBranch(this._octokit, issue, this._owner, this._repo)
@@ -49,6 +53,7 @@ export class Github {
 
     public async createIssue() {
       try {
+        this._configVerify()
         const answers = await Issue.createIssue(this._octokit, this._owner, this._repo)
 
         answers.branch === 'OUI' && Branch.createBranch(this._octokit, answers.issue, this._owner, this._repo)    
@@ -59,6 +64,7 @@ export class Github {
 
     public async createRepo () {
         try {
+          this._configVerify()
             const repo = new Repos()
             // Create remote repository
             const url = await repo.createRemoteRepo()
@@ -73,6 +79,23 @@ export class Github {
           } catch(err: any) {
             this._catchError(err)
           }
+    }
+
+    private _configVerify () {
+      if (!this._repo) {
+        console.log(chalk.red('Veuillez renseigner un repo avec la commande suivant: gconf config -r <repo>'))
+        process.exit()
+      }
+
+      if (!this._owner) {
+        console.log(chalk.red('Veuillez renseigner un owner avec la commande suivant: gconf config -o <owner> !'))
+        process.exit()
+      }
+
+      if (!this._token) {
+        console.log(chalk.red('Veuillez renseigner un token avec la commande suivant: gconf config -t <token> !'))
+        process.exit()
+      }
     }
 
     private _catchError(err: any): void {
