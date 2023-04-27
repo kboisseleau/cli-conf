@@ -9,7 +9,7 @@ clear()
 
 console.log(
     chalk.yellow(
-      figlet.textSync("Gconf", { horizontalLayout: "full" })
+      figlet.textSync("cli-gconf", { horizontalLayout: "full" })
     )
   )
 

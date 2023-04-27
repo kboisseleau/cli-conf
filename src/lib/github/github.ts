@@ -83,17 +83,17 @@ export class Github {
 
     private _configVerify () {
       if (!this._repo) {
-        console.log(chalk.red('Veuillez renseigner un repo avec la commande suivant: gconf config -r <repo>'))
+        console.log(chalk.red('Veuillez renseigner un repo avec la commande suivant: cgg config -r <repo>'))
         process.exit()
       }
 
       if (!this._owner) {
-        console.log(chalk.red('Veuillez renseigner un owner avec la commande suivant: gconf config -o <owner> !'))
+        console.log(chalk.red('Veuillez renseigner un owner avec la commande suivant: cgg config -o <owner> !'))
         process.exit()
       }
 
       if (!this._token) {
-        console.log(chalk.red('Veuillez renseigner un token avec la commande suivant: gconf config -t <token> !'))
+        console.log(chalk.red('Veuillez renseigner un token avec la commande suivant: cgg config -t <token> !'))
         process.exit()
       }
     }
