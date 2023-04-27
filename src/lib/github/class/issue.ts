@@ -1,4 +1,3 @@
-import { ConfigstoreService } from "../../../../src/service/configstore.service.js";
 import { DataIssue } from "../../../../src/@model/github/data-issue.interface.js";
 import { Inquirer } from "../../../../src/lib/inquirer.js";
 import chalk from 'chalk';

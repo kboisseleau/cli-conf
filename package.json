@@ -1,5 +1,5 @@
 {
-  "name": "cli-conf",
+  "name": "gconf",
   "version": "1.0.0",
   "type": "module",
   "description": "Cli permetant d'initialiser un repo git et de récupérer des fichiers de config",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kboisseleau/cli-conf.git"
+    "url": "git+https://github.com/kboisseleau/gconf.git"
   },
   "keywords": [
     "cli"
@@ -26,9 +26,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kboisseleau/cli-conf/issues"
+    "url": "https://github.com/kboisseleau/gconf/issues"
   },
-  "homepage": "https://github.com/kboisseleau/cli-conf#readme",
+  "homepage": "https://github.com/kboisseleau/gconf#readme",
   "devDependencies": {
     "@types/node": "^18.15.10",
     "nodemon": "^2.0.22",

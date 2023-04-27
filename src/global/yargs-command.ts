@@ -28,7 +28,7 @@ export class YargsCommande {
                 alias: 'token',
                 describe: 'Définir un token Github dans la configuration de l\'application',
                 type: 'boolean',
-                requiresArg: true
+                requiresArg: false
               })
               .option('r', {
                 alias: 'repo',
@@ -48,7 +48,6 @@ export class YargsCommande {
 
               const argument = argv._.pop()
 
-              console.log(argument)
               if (argv.t) {
                 conf.set(CONFIG_FIELD.githubToken, argument)
               } else if (argv.r) {
