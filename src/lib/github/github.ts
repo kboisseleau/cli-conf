@@ -3,9 +3,8 @@ import chalk from 'chalk'
 import { Repos } from '../repo.js'
 import { Issue } from './class/issue.js'
 import { Branch } from './class/branch.js'
-import { ConfigstoreService } from '../../../src/service/configstore.service.js'
-import { CONFIG_FIELD } from '../../../src/@model/enum/config-field.enum.js'
 import { Octokit } from '@octokit/rest'
+import { Files } from '../files.js'
 
 export class Github {
     private _githubAuthService: GithubAuthService
@@ -16,10 +15,10 @@ export class Github {
     private _token
 
     constructor () {
-      this._conf = ConfigstoreService.getInstance()
-      this._token = this._conf.get(CONFIG_FIELD.githubToken)
-      this._repo = this._conf.get(CONFIG_FIELD.githubRepo)
-      this._owner = this._conf.get(CONFIG_FIELD.githubOwner)
+      this._conf = Files.getGconfJson()
+      this._token = this._conf.token
+      this._repo = this._conf.repo
+      this._owner = this._conf.owner
 
       if (this._token) {
         this._octokit = new Octokit({ auth: this._token })
