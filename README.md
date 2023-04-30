@@ -2,9 +2,8 @@
 ### Installation
 
 ```javascript
-$ npm i -g cgg
+$ npm i -g cli-gconf
 ```
-Commandes disponibles
 ### Config
 Créer un fichier gconf.json à la racine du projet au format suivant: 
 
@@ -19,6 +18,7 @@ Créer un fichier gconf.json à la racine du projet au format suivant:
 Permet l'accès au repo.
 Toute les commandes doivent être lancé à la racine du projet.
 
+Commandes disponibles
 ### repo
 Cette commande permet de créer un nouveau repository sur Github.
 
