@@ -2,38 +2,23 @@
 ### Installation
 
 ```javascript
-$ npm i -g cgg
+$ npm i -g cli-gconf
 ```
-Commandes disponibles
 ### Config
-Cette commande permet de définir ou supprimer un token Github dans la configuration de l'application.
+Créer un fichier gconf.json à la racine du projet au format suivant: 
 
 ```bash
-$ cgg token -t <github_token>
+{
+    token: 'githubToken',
+    repo: 'githubRepo',
+    owner: 'githubOwner'
+}
 ```
 
-ou
+Permet l'accès au repo.
+Toute les commandes doivent être lancé à la racine du projet.
 
-```bash
-$ cgg token -r <github_repo>
-```
-
-ou
-
-```bash
-$ cgg token -o <github_owner>
-```
-Options
-La commande token supporte les options suivantes :
-
--t, --token : Définit un token Github dans la configuration de l'application. Exige un argument <token> pour spécifier le token à définir.
--r, --repo : Définit un repo Github dans la configuration de l'application. Exige un argument <repo> pour spécifier le repo à définir.
--o, --owner : Définit un owner Github dans la configuration de l'application. Exige un argument <owner> pour spécifier le owner à définir.
-Exemple d'utilisation pour définir un token Github :
-
-```bash
-$ cgg token -t 151515
-```
+Commandes disponibles
 ### repo
 Cette commande permet de créer un nouveau repository sur Github.
 

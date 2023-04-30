@@ -31,7 +31,7 @@ export class Inquirer {
             type: 'input',
             name: 'name',
             message: 'Enter a name for the repository:',
-            default: argv._[0] || files.getCurrentDirectoryBase(),
+            default: argv._[0] || Files.getCurrentDirectoryBase(),
             validate: (value: string) => value.length ? true : 'Please enter a name for the repository.',
           },
           {
@@ -67,8 +67,7 @@ export class Inquirer {
 
       static askIssueDetails () {
         const argv = minimist(process.argv.slice(2));
-        const files = new Files();
-        const DEFAULT_ISSUE_TITLE = argv._[0] || files.getCurrentDirectoryBase();
+        const DEFAULT_ISSUE_TITLE = argv._[0] || Files.getCurrentDirectoryBase();
         const DEFAULT_ISSUE_DESCRIPTION = argv._[1] || null;
         const DEFAULT_CREATE_BRANCH = 'NON';
 
